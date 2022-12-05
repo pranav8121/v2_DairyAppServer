@@ -1,10 +1,17 @@
 const date = require('date-and-time');
+const path = require('path');
+const ejs = require('ejs');
+const pdf = require('html-pdf');
+var options = { format: 'Letter' };
+const fs = require('fs');
+
 const collection = require("../../Schemas/doc_bills");
 const clsDailyData = require('./clsDailyData');
 const obj_dailyData = new clsDailyData();
 const clsAccount = require('./clsAccount');
 const obj_Account = new clsAccount();
-
+const clsPDFData = require('../Model/clsPdf');
+const obj_pdfData = new clsPDFData();
 class clsBillData {
     async postBill(req) {
         try {
@@ -76,12 +83,12 @@ class clsBillData {
         }
     }
 
-    async getExistBillData(req) {
+    async getExistBillData(req, res) {
         try {
             let obj_response = {};
             let now = new Date();
             let today = date.format(now, 'YYYY-MM-DD');
-            let dates = obj_dailyData.getLastBill();
+            let dates = obj_dailyData.getLastBill(req, res);
             let data = {
                 UId: req.UId,
                 No: req.No,
@@ -90,8 +97,32 @@ class clsBillData {
             }
             let result = await collection.findOne(data);
             if (result) {
-                Object.assign(obj_response, { status: 'success' }, { result: result });
-                return obj_response;
+                let now = new Date();
+                var fileName = 'BillKapila.pdf';
+                var savedFileName;
+                let regPDF = res.render('BillPdf', async (err, data) => {
+                    if (err) {
+                        console.log("ERROR", err);
+                        Object.assign(obj_response, { status: 'fail' }, { result: err });
+                        return obj_response;
+                    } else {
+                        if (fs.existsSync(`${process.cwd()}/PDFs/${fileName}`)) {
+                            fs.unlink(`${process.cwd()}/PDFs/${fileName}`, function (err) {
+                                if (err) throw err;
+                                console.log('File deleted!');
+                            });
+                        }
+                        pdf.create(data, options).toStream(function (err, stream) {
+                            stream.pipe(fs.createWriteStream(`${process.cwd()}/PDFs/${fileName}`));
+                        })
+                    }
+                });
+                const isFile = await obj_pdfData.holdBeforeFileExists(`${process.cwd()}/PDFs/${fileName}`, 10000)
+                if (isFile) {
+                    console.log("File Saved!!", path.normalize(`${process.cwd()}/PDFs/${fileName}`));
+                    Object.assign(obj_response, { status: 'success' }, { result: path.normalize(`${process.cwd()}/PDFs/${fileName}`) });
+                    return obj_response;
+                }
             } else {
                 Object.assign(obj_response, { status: 'success' }, { result: 'Data Not Exist' });
                 return obj_response;

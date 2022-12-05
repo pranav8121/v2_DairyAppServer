@@ -15,7 +15,7 @@ exports.postBill = (req, res) => {
 };
 
 exports.getExistBillData = (req, res) => {
-    obj_billData.getExistBillData(req.body)
+    obj_billData.getExistBillData(req.body,res)
         .then((result) => {
             res.statusCode = 200;
             res.send(result);
