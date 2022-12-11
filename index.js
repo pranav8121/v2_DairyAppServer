@@ -4,7 +4,8 @@ const { mongoose } = require('./db');
 const cors = require('cors');
 const app = express();
 const path = require('path')
-var server = require('http').Server(app);
+var server = require('http').createServer(app);
+// const WebSocketServer = http.createServer(app)
 // const arrSocket = require('./API/arrSocket');
 // const WebSocketHandler = require('./API/WebSocket/controller/socketHandler');
 const credential = require("./Schemas/doc_login");
@@ -53,10 +54,10 @@ app.use('/API/DairyData', dairyData);
 app.use('/API/TruncateCollection', truncate);
 app.use('/API/pdf', pdf);
 
-setInterval(async () => {
-    await credential.updateMany({ active: 1, loginCounter: { $lt: 20 } }, { $inc: { loginCounter: 1 } });
-    await credential.updateOne({ loginCounter: { $gte: 20 } }, { $set: { active: 0, Host_Token1: '', loginCounter: 0 } });
-}, 3000)
+// setInterval(async () => {
+// await credential.updateMany({ active: 1, loginCounter: { $lt: 20 } }, { $inc: { loginCounter: 1 } });
+// await credential.updateOne({ loginCounter: { $gte: 20 } }, { $set: { active: 0, Host_Token1: '', loginCounter: 0 } });
+// }, 3000)
 // io.on('connection', (socket) => {
 //     console.log("Client Connecteda")
 //     socket.on("doneEvent", (data) => {

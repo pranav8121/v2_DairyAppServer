@@ -70,6 +70,8 @@ class clsAdvance {
     async postSupply(req) {
         try {
             let obj_response = {};
+            let now = new Date();
+            let today = date.format(now, 'YYYY-MM-DD');
             let balReq = {
                 type: req.type,
                 No: req.No,
@@ -83,7 +85,7 @@ class clsAdvance {
                 type: req.type,
                 addAmount: req.addAmount,
                 cutAmount: req.cutAmount,
-                date: new Date(req.date),
+                date: (req.date) ? new Date(req.date) : new Date(today),
                 balance: sum,
                 No: req.No,
                 rate: req.rate,

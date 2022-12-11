@@ -6,6 +6,7 @@ module.exports = mongoose.model('Credential', {
     Name: { type: String },
     multi: { type: Number },
     active: { type: Number },
+    userType: { type: Number },
     loginCounter: { type: Number },
     Host_Token1: { type: String },
     Host_Token2: { type: String },

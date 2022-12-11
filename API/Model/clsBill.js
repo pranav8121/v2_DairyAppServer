@@ -6,6 +6,7 @@ var options = { format: 'Letter' };
 const fs = require('fs');
 
 const collection = require("../../Schemas/doc_bills");
+const Dailycollection = require("../../Schemas/doc_dailyData");
 const clsDailyData = require('./clsDailyData');
 const obj_dailyData = new clsDailyData();
 const clsAccount = require('./clsAccount');
@@ -66,8 +67,13 @@ class clsBillData {
                 if (Object.keys(createdData).length !== 0) {
                     let res1 = await obj_Account.postAdvance(reqAdvCutting);
                     let res2 = await obj_Account.postSupply(reqSupplyCutting);
-                    if (res1 == "Data Added Successfully" && res2 == "Data Added Successfully") {
+                    console.log(res1.result == "Data Added Successfully" && res2.result == "Data Added Successfully");
+                    if (res1.result == "Data Added Successfully" && res2.result == "Data Added Successfully") {
                         Object.assign(obj_response, { status: 'success' }, { result: "Data Added Successfully" });
+                        return obj_response;
+                    } else {
+                        await collection.delete({ inv_no: `${req.No}|${dates.from}|${dates.to}`, UId: req.UId });
+                        Object.assign(obj_response, { status: 'success' }, { result: "Error Saving" });
                         return obj_response;
                     }
                 } else {
@@ -99,8 +105,38 @@ class clsBillData {
             if (result) {
                 let now = new Date();
                 var fileName = 'BillKapila.pdf';
-                var savedFileName;
-                let regPDF = res.render('BillPdf', async (err, data) => {
+                let data = {
+                    UId: result.UId,
+                    No: result.No,
+                    date: { $gte: result.from, $lte: result.to }
+                };
+                const doc = await Dailycollection.find(data);
+                Object.assign(result, { data: doc });
+                // Object.assign(result, { moment: moment });
+                // {
+                //     _id: new ObjectId("63891ef50bed9ff7a57ce73c"),
+                //     Name: 'प्रणव पाटील',
+                //     No: 1,
+                //     totalmilk: 11.5,
+                //     totalRate: 348.56,
+                //     morTotalmilk: 3.5,
+                //     mortotalRate: 94.9,
+                //     eveTotalmilk: 8,
+                //     evetotalRate: 253.66,
+                //     advance: 10,
+                //     bank: 100,
+                //     supply: 10,
+                //     balance: 3080,
+                //     cutting: 120,
+                //     amountTogiven: 228.56,
+                //     inv_no: '1|2022-11-21|2022-11-30',
+                //     from: 2022-11-21T00:00:00.000Z,
+                //     to: 2022-11-30T00:00:00.000Z,
+                //     generatedOn: 2022-12-02T00:00:00.000Z,
+                //     UId: '62b9d7731a35701d0f8efc74',
+                //     __v: 0
+                //   }
+                let regPDF = res.render('BillPdf', result, async (err, data) => {
                     if (err) {
                         console.log("ERROR", err);
                         Object.assign(obj_response, { status: 'fail' }, { result: err });
@@ -120,7 +156,7 @@ class clsBillData {
                 const isFile = await obj_pdfData.holdBeforeFileExists(`${process.cwd()}/PDFs/${fileName}`, 10000)
                 if (isFile) {
                     console.log("File Saved!!", path.normalize(`${process.cwd()}/PDFs/${fileName}`));
-                    Object.assign(obj_response, { status: 'success' }, { result: path.normalize(`${process.cwd()}/PDFs/${fileName}`) });
+                    Object.assign(obj_response, { status: 'success' }, { result: `PDFs/${fileName}` });
                     return obj_response;
                 }
             } else {

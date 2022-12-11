@@ -32,7 +32,8 @@
 
 <body>
 	<center class="name">किपला दूध सं.मया.</center>
-	<center >नाव: 1 - गणपती संतू पाटील</center>
+	<center>नाव: <%=No%> - <%=Name%>
+	</center>
 	<hr>
 	<div style="margin-left: 30px;">
 		<table class="table">
@@ -45,214 +46,58 @@
 				<th>दर</th>
 				<th>रक्कम</th>
 			</tr>
+			<% data.forEach((ele)=>{ %>
 			<tr>
-				<td>1/11/22</td>
-				<td>सकाळ</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
+				<td><%=moment(ele.date, "DD/MM/YYYY")%></td>
+				<td><%=ele.hour%></td>
+				<td><%=ele.milk%></td>
+				<td><%=ele.fat%></td>
+				<td><%=ele.snf%></td>
+				<td><%=ele.rate%></td>
+				<td><%=ele.t_rate%></td>
 			</tr>
-			<tr>
-				<td>1/11/22</td>
-				<td>सकाळ</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>2/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>2/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>3/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>3/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>4/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>4/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>5/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>5/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>6/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>6/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>7/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>7/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>8/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>8/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>9/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>9/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>10/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-			<tr>
-				<td>10/11/22</td>
-				<td>संध्या</td>
-				<td>1.65</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-				<td>100</td>
-			</tr>
-
+			<% }) %>
 		</table>
 	</div>
 	<div>
 		<table class="table table-bordered" style="padding-left: 50%;padding-right: 50%;">
 			<tr>
 				<td>ए.दूध</td>
-				<td><b>9.5लि.</b></td>
+				<td><b>
+						<%=totalmilk%>
+					</b></td>
 				<td>ऍडव्हान्स</td>
-				<td><b>120रु.</b></td>
+				<td><b>
+						<%=advance%>
+					</b></td>
 			</tr>
 			<tr>
 				<td>पशुखाद्य</td>
-				<td><b>120रु.</b></td>
+				<td><b>
+						<%=supply%>
+					</b></td>
 				<td>ए.कपात</td>
-				<td><b>120रु.</b></td>
+				<td><b>
+						<%=cutting%>
+					</b></td>
 			</tr>
 			<tr>
 				<td>ए.रक्कम</td>
-				<td><b>120रु.</b></td>
+				<td><b>
+						<%=totalRate%>
+					</b></td>
 				<td>बँक भरणा</td>
-				<td><b>120रु.</b></td>
+				<td><b>
+						<%=bank%>रु.
+					</b></td>
 			</tr>
 			<tr>
 				<td>शि.पशुखाद्य</td>
-				<td><b>120रु.</b></td>
+				<td><b>tobesendरु.</b></td>
 				<td>देय रक्कम</td>
-				<td><b>120रु.</b></td>
+				<td><b>
+						<%=amountTogiven%>रु.
+					</b></td>
 			</tr>
 		</table>
 	</div>
